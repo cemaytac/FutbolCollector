@@ -1,0 +1,21 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #F4B860;
+  color: #040403;
+}
+
+.card {
+  background-color: #2E7D32;
+}
+
+.card-title {
+  text-decoration: none;
+  color: #246eb9;
+}
+
+footer.page-footer {
+  padding-top: 0;
+  text-align: right;
+}
