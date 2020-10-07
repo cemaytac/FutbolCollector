@@ -10,9 +10,37 @@ body {
   background-color: #2E7D32;
 }
 
+main {
+  flex: 1 0 auto;
+}
+
 .card-title {
-  text-decoration: none;
-  color: #246eb9;
+  color: #99C2EB;
+}
+
+.player-title:hover {
+  color: #F06543;
+}
+
+#player-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #040403;
+}
+
+.container-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+}
+
+.player-details-header {
+  display: flex;
+  justify-content: center;
 }
 
 footer.page-footer {
