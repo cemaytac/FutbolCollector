@@ -11,17 +11,51 @@
     </span>
     <div class='container-div'>
       <div class="info-div">
-        <h3>Position: {{ player.position }}</h3>
         <h3>Age: {{ player.age }}</h3>
+        <h3>Position: {{ player.position }}</h3>
         <h3>Preferred Foot: {{ player.preferredFoot }}</h3>
       </div>
       <div class='stat-div'>
-        <h3>Appearances: {{ player.appearances }}<h3>
+        <!-- <h3>Appearances: {{ player.appearances }}<h3>
             <h3>Goals: {{ player.goals }}<h3>
-                <h3>Assists: {{ player.assists }}<h3>
+                <h3>Assists: {{ player.assists }}<h3> -->
+      </div>
+    </div>
+    <div class='action-container'>
+      <div class="card-action">
+        <a href="{% url 'players_update' player.id %}">Edit</a>
+        <a href="{% url 'players_delete' player.id %}">Delete</a>
       </div>
     </div>
   </div>
+</div>
+<div class="col s6">
+  <form action="{% url 'add_stats' player.id %}" method="post">
+    {% csrf_token %}
+    {{ stats_form.as_p }}
+    <input type="submit" class="btn" value="Add Stat">
+  </form>
+  <table class="striped">
+    <thead>
+      <tr>
+        <th>Appearances</th>
+        <th>Goals</th>
+        <th>Assists</th>
+        <th>Shots</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for stats in player.stats_set.all %}
+      <tr>
+        <td>{{stats.appearances}}</td>
+        <td>{{stats.goals}}</td>
+        <td>{{stats.assists}}</td>
+        <td>{{stats.shots}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 </div>
 
 {% endblock %}

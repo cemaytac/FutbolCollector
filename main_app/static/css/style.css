@@ -2,12 +2,12 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: #F4B860;
+  background-color:#afff99a5;
   color: #040403;
 }
 
 .card {
-  background-color: #2E7D32;
+  background-color: #2e7d32e9;
 }
 
 main {
@@ -38,9 +38,32 @@ main {
   margin: 10px;
 }
 
+label {
+  font-size: 20px;
+  color: #2E7D32;
+}
+
+td, th {
+  width: 10%;
+}
+
 .player-details-header {
   display: flex;
   justify-content: center;
+}
+
+.card-action {
+  display: flex;
+  flex-direction: row;
+  font-size: 32px;
+  color: #F06543;
+}
+
+.action-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 footer.page-footer {
