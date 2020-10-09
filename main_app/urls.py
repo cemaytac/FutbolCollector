@@ -22,6 +22,7 @@ urlpatterns = [
          views.TrainingUpdate.as_view(), name='trainings_update'),
     path('trainings/<int:pk>/delete/',
          views.TrainingDelete.as_view(), name='trainings_delete'),
-    # path('players/<int:player_id>/assoc_training/<int:training_id>/',
-    #      views.assoc_training, name='assoc_training'),
+    path('accounts/signup/', views.signup, name='signup'),
+    path('players/<int:player_id>/assoc_training/<int:training_id>/',
+         views.assoc_training, name='assoc_training'),
 ]
