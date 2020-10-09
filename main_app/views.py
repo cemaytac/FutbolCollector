@@ -20,10 +20,10 @@ def players_index(request):
 
 def players_detail(request, player_id):
     player = Player.objects.get(id=player_id)
-    training_player_doesnt_have = Training.objects.exclude(
-        id__in=player.training.all().values_list('id'))
+    trainings_player_doesnt_have = Training.objects.exclude(
+        id__in=player.trainings.all().values_list('id'))
     stats_form = StatsForm()
-    return render(request, 'players/detail.html', {'player': player, 'stats_form': stats_form, 'training': training_player_doesnt_have})
+    return render(request, 'players/detail.html', {'player': player, 'stats_form': stats_form, 'trainings': trainings_player_doesnt_have})
 
 
 def add_stats(request, player_id):
@@ -38,7 +38,6 @@ def add_stats(request, player_id):
 class PlayerCreate(CreateView):
     model = Player
     fields = '__all__'
-    success_url = '/players/'
 
 
 class PlayerUpdate(UpdateView):
@@ -66,14 +65,14 @@ class TrainingCreate(CreateView):
 
 class TrainingUpdate(UpdateView):
     model = Training
-    fields = ['name', 'color']
+    fields = ['training_type', 'date', 'duration', 'completed', ]
 
 
 class TrainingDelete(DeleteView):
     model = Training
-    success_url = '/training/'
+    success_url = '/trainings/'
 
 
-def assoc_training(request, player_id, training_id):
-    Player.objects.get(id=player_id).training.add(training_id)
-    return redirect('detail', player_id=player_id)
+# def assoc_training(request, player_id, training_id):
+#     Player.objects.get(id=player_id).trainings.add(training_id)
+#     return redirect('detail', player_id=player_id)

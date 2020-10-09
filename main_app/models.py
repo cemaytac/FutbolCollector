@@ -15,6 +15,8 @@ PREFERRED_FOOT = [
     ('B', 'Both'),
 ]
 
+# call this
+
 
 class Training(models.Model):
     training_type = models.CharField("Training Type", max_length=50)
@@ -26,7 +28,7 @@ class Training(models.Model):
         return f"{self.training_type}, {self.date}"
 
     def get_absolute_url(self):
-        return reverse('training_detail', kwargs={'pk': self.id})
+        return reverse('trainings_detail', kwargs={'pk': self.id})
 
 
 class Player(models.Model):
@@ -37,7 +39,7 @@ class Player(models.Model):
         max_length=3, choices=POSITIONS, default=POSITIONS[0][0])
     preferredFoot = models.CharField(
         'Preferred Foot', max_length=1, choices=PREFERRED_FOOT, default=PREFERRED_FOOT[0][0])
-    training = models.ManyToManyField(Training)
+    trainings = models.ManyToManyField(Training)
 
     def __str__(self):
         return f"{self.name}, {self.get_position_display()}"

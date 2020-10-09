@@ -96,12 +96,6 @@
     <h5>{{player.name}} Already scheduled for all available training sessions.</h5>
     {% endif %}
   </div>
-  <div class="card-action">
-    <form action="{% url 'assoc_training' player.id training.id %}" method="post">
-      {% csrf_token %}
-      <button type="submit" class="btn">Add</button>
-    </form>
-  </div>
 </div>
 <script>
   var dateEl = document.getElementById('id_date');
