@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Player
+from django.views.generic import ListView, DetailView
+from .models import Player, Training
 from .forms import StatsForm
 
 
@@ -19,8 +20,10 @@ def players_index(request):
 
 def players_detail(request, player_id):
     player = Player.objects.get(id=player_id)
+    training_player_doesnt_have = Training.objects.exclude(
+        id__in=player.training.all().values_list('id'))
     stats_form = StatsForm()
-    return render(request, 'players/detail.html', {'player': player, 'stats_form': stats_form})
+    return render(request, 'players/detail.html', {'player': player, 'stats_form': stats_form, 'training': training_player_doesnt_have})
 
 
 def add_stats(request, player_id):
@@ -46,3 +49,31 @@ class PlayerUpdate(UpdateView):
 class PlayerDelete(DeleteView):
     model = Player
     success_url = '/players/'
+
+
+class TrainingList(ListView):
+    model = Training
+
+
+class TrainingDetail(DetailView):
+    model = Training
+
+
+class TrainingCreate(CreateView):
+    model = Training
+    fields = '__all__'
+
+
+class TrainingUpdate(UpdateView):
+    model = Training
+    fields = ['name', 'color']
+
+
+class TrainingDelete(DeleteView):
+    model = Training
+    success_url = '/training/'
+
+
+def assoc_training(request, player_id, training_id):
+    Player.objects.get(id=player_id).training.add(training_id)
+    return redirect('detail', player_id=player_id)

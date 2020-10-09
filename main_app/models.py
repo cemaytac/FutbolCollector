@@ -2,19 +2,45 @@ from django.db import models
 from django.urls import reverse
 from datetime import date
 
+POSITIONS = [
+    ('GK', 'Goalkeeper'),
+    ('DEF', 'Defender'),
+    ('MID', 'Midfielder'),
+    ('FW', 'Forward'),
+]
+
+PREFERRED_FOOT = [
+    ('R', 'Right'),
+    ('L', 'Left'),
+    ('B', 'Both'),
+]
+
+
+class Training(models.Model):
+    training_type = models.CharField("Training Type", max_length=50)
+    date = models.DateField(default=date.today)
+    duration = models.IntegerField()
+    completed = models.BooleanField()
+
+    def __str__(self):
+        return f"{self.training_type}, {self.date}"
+
+    def get_absolute_url(self):
+        return reverse('training_detail', kwargs={'pk': self.id})
+
 
 class Player(models.Model):
     name = models.CharField(max_length=100)
     age = models.IntegerField()
     kitNumber = models.IntegerField('Kit Number')
-    position = models.CharField(max_length=3)
-    preferredFoot = models.CharField('Preferred Foot', max_length=5)
-    appearances = models.IntegerField()
-    goals = models.IntegerField()
-    assists = models.IntegerField()
+    position = models.CharField(
+        max_length=3, choices=POSITIONS, default=POSITIONS[0][0])
+    preferredFoot = models.CharField(
+        'Preferred Foot', max_length=1, choices=PREFERRED_FOOT, default=PREFERRED_FOOT[0][0])
+    training = models.ManyToManyField(Training)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}, {self.get_position_display()}"
 
     class Meta:
         ordering = ['kitNumber']
@@ -33,8 +59,12 @@ class Stats(models.Model):
 
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['-date']
+
     def __str__(self):
-        return f"Player scored {self.goals} in {self.appearances} games"
+        return f"{self.player.name} scored {self.goals} in {self.appearances} games"
+
 
 # class Equipment(models.Model):
 #     cleats = models.BooleanField()
