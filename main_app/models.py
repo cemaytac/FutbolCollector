@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from datetime import date
+from django.contrib.auth.models import User
 
 POSITIONS = [
     ('GK', 'Goalkeeper'),
@@ -40,6 +41,7 @@ class Player(models.Model):
     preferredFoot = models.CharField(
         'Preferred Foot', max_length=1, choices=PREFERRED_FOOT, default=PREFERRED_FOOT[0][0])
     trainings = models.ManyToManyField(Training)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.name}, {self.get_position_display()}"
